@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 export RELEASE_TYPE="$1"
 
@@ -28,7 +28,7 @@ if [[ $(git rev-parse HEAD) != $(git rev-parse origin/master) ]]; then
   exit 1
 fi
 
-export NEW_VERSION="$(poetry version ${RELEASE_TYPE} --short)"
+NEW_VERSION=$(poetry version ${RELEASE_TYPE} --short) || { echo 'Error: Failed to determine the new version. Exiting.'; exit 1; }
 git checkout -b "release-${NEW_VERSION}"
 git add pyproject.toml
 git commit -m "Release ${NEW_VERSION}"
@@ -37,7 +37,7 @@ git tag -f latest
 git push origin -f ${NEW_VERSION}
 git push origin -f latest
 
-export NEW_PREPATCH_VERSION="$(poetry version prepatch --short)"
+NEW_PREPATCH_VERSION=$(poetry version prepatch --short) || { echo 'Error: Failed to determine the new pre-patch version. Exiting.'; exit 1; }
 git add pyproject.toml
 git commit -m "Bumping to next pre-patch version ${NEW_PREPATCH_VERSION}"
 git push
