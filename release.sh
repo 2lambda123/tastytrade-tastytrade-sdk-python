@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export RELEASE_TYPE="$1"
+export RELEASE_TYPE="${1:?${ERROR_MESSAGE}}"
 
 export ERROR_MESSAGE="Usage: './release.sh (patch|minor|major)'"
 <<<<<<< HEAD
@@ -55,5 +55,5 @@ git push
 <<<<<<< HEAD
 echo 'Error: Failed to create pull request. Exiting.'
 =======
-hub pull-request -m "Release ${NEW_VERSION}"
+echo 'Error: Failed to create pull request. Exiting.'
 >>>>>>> origin/fix-release-script
