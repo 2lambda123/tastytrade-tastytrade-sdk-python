@@ -11,9 +11,8 @@ Before using this SDK, ensure that you:
 ## Install
 
 ```shell
-pip install tastytrade-sdk
+pip install tastytrade-sdk-python
 ```
-
 ## Use It
 
 ```python
@@ -22,8 +21,8 @@ from tastytrade_sdk import Tastytrade
 tasty = Tastytrade()
 
 tasty.login(
-    login='trader@email.com',
-    password='password'
+    login='your_email@example.com',
+    password='your_password'
 )
 
 tasty.api.post('/sessions/validate')
