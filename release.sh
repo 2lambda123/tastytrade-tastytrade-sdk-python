@@ -15,6 +15,11 @@ if [ -z "$RELEASE_TYPE" ]; then
 =======
 if [ -z "$RELEASE_TYPE" ]; then
   echo "$ERROR_MESSAGE"
+  echo "Error: Failed to set RELEASE_TYPE variable. Exiting."
+  echo "Error logs:"
+  echo "$(git log --pretty=format:'%h %s' -n 10)"
+  exit 1
+  echo "$ERROR_MESSAGE"
 >>>>>>> origin/fix-release-script
   exit 1
 fi
