@@ -4,8 +4,8 @@ export RELEASE_TYPE="$1"
 
 export ERROR_MESSAGE="Usage: './release.sh (patch|minor|major)'"
 <<<<<<< HEAD
-if [ -z "${RELEASE_TYPE}" ]; then
-  echo "${ERROR_MESSAGE}"
+if [ -z "$RELEASE_TYPE" ]; then
+  echo "$ERROR_MESSAGE"
   echo 'Error: Failed to set RELEASE_TYPE variable. Exiting.'
 =======
 if [ -z "$RELEASE_TYPE" ]; then
