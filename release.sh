@@ -4,7 +4,7 @@ export RELEASE_TYPE="$1"
 
 export ERROR_MESSAGE="Usage: './release.sh (patch|minor|major)'"
 <<<<<<< HEAD
-if [ -z "${RELEASE_TYPE}" ]; then
+if [ -z "$RELEASE_TYPE" ]; then
   echo "${ERROR_MESSAGE}"
   echo 'Error: Failed to set RELEASE_TYPE variable. Exiting.'
 =======
@@ -37,7 +37,8 @@ fi
 NEW_VERSION=$(poetry version ${RELEASE_TYPE} --short) || { echo 'Error: Failed to determine the new version. Exiting.'; exit 1; }
 git checkout -b "release-${NEW_VERSION}"
 =======
-export NEW_VERSION="$(poetry version "$RELEASE_TYPE" --short)"
+NEW_VERSION=$(poetry version ${RELEASE_TYPE} --short) || { echo 'Error: Failed to determine the new version. Exiting.'; exit 1; }
+git checkout -b "release-${NEW_VERSION}"
 git checkout -b "release-$NEW_VERSION"
 >>>>>>> origin/fix-release-script
 git add pyproject.toml
@@ -53,7 +54,7 @@ git commit -m "Bumping to next pre-patch version $NEW_PREPATCH_VERSION"
 git push
 
 <<<<<<< HEAD
-echo 'Error: Failed to create pull request. Exiting.'
+hub pull-request -m "Release ${NEW_VERSION}"
 =======
 hub pull-request -m "Release ${NEW_VERSION}"
 >>>>>>> origin/fix-release-script
