@@ -34,8 +34,10 @@ class RequestsSession:
 
         """
         self.__session.headers["Authorization"] = self.request(
-            "POST", "/sessions", data={"login": login, "password": password}
-        )["data"]["session-token"]
+            "POST", "/sessions", data={
+                "login": login,
+                "password": password
+            })["data"]["session-token"]
 
     def request(
         self,
@@ -55,8 +57,7 @@ class RequestsSession:
         url = self.__url(path, params)
         logging.debug("%s %s", path, params)
         response = self.__session.request(
-            method, url, json=data, headers={"User-Agent": self.__user_agent}
-        )
+            method, url, json=data, headers={"User-Agent": self.__user_agent})
         is_ok = 200 <= response.status_code <= 399
         if is_ok:
             try:
@@ -102,7 +103,9 @@ class Api:
         """@private"""
         self.__session = requests_session
 
-    def get(self, path: str, params: Optional[QueryParams] = None) -> Optional[dict]:
+    def get(self,
+            path: str,
+            params: Optional[QueryParams] = None) -> Optional[dict]:
         """Make a GET request
 
         :param path: str:
@@ -156,7 +159,9 @@ class Api:
         """
         return self.__session.request("PATCH", path, params=params, data=data)
 
-    def delete(self, path: str, params: Optional[QueryParams] = None) -> Optional[dict]:
+    def delete(self,
+               path: str,
+               params: Optional[QueryParams] = None) -> Optional[dict]:
         """Make a DELETE request
 
         :param path: str:
@@ -168,23 +173,27 @@ class Api:
 
 class Unauthorized(TastytradeSdkException):
     """ """
+
     def __init__(self):
         super().__init__("Unauthorized")
 
 
 class BadRequest(TastytradeSdkException):
     """ """
+
     def __init__(self):
         super().__init__("Bad Request")
 
 
 class ServerError(TastytradeSdkException):
     """ """
+
     def __init__(self):
         super().__init__("Server Error")
 
 
 class Unknown(TastytradeSdkException):
     """ """
+
     def __init__(self):
         super().__init__("Unknown Error")
