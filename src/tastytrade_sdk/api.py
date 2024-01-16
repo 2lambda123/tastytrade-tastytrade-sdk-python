@@ -1,9 +1,15 @@
 import logging
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any
+from typing import Dict
+from typing import List
+from typing import Optional
+from typing import Tuple
+from typing import Union
 
-from injector import inject, singleton
-from requests import JSONDecodeError, Session
-
+from injector import inject
+from injector import singleton
+from requests import JSONDecodeError
+from requests import Session
 from tastytrade_sdk.config import Config
 from tastytrade_sdk.exceptions import TastytradeSdkException
 
