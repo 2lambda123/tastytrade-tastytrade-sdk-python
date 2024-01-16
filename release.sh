@@ -43,12 +43,12 @@ if [[ $(git rev-parse HEAD) != $(git rev-parse origin/master) ]]; then
 fi
 
 <<<<<<< HEAD
-NEW_VERSION=$(poetry version ${RELEASE_TYPE} --short) || { echo 'Error: Failed to determine the new version. Exiting.'; exit 1; }
+NEW_VERSION=$(poetry version ${RELEASE_TYPE} --short) || { echo 'Error: Failed to determine the new version. Exiting.'; echo 'Error logs:'; echo '$(git log --pretty=format:'%h %s' -n 10)'; exit 1; }
 git checkout -b "release-${NEW_VERSION}"
 =======
 NEW_VERSION=$(poetry version ${RELEASE_TYPE} --short) || { echo 'Error: Failed to determine the new version. Exiting.'; exit 1; }
 git checkout -b "release-${NEW_VERSION}"
-git checkout -b "release-$NEW_VERSION"
+git checkout -b "release-${NEW_VERSION}"
 >>>>>>> origin/fix-release-script
 git add pyproject.toml
 git commit -m "Release $NEW_VERSION"
