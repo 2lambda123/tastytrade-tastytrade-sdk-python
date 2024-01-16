@@ -13,8 +13,8 @@ if [ -z "$RELEASE_TYPE" ]; then
 >>>>>>> origin/fix-release-script
   exit 1
 fi
-if ! [[ "$RELEASE_TYPE" =~ (patch|minor|major) ]]; then
-  echo "$ERROR_MESSAGE"
+if [[ "$(git rev-parse --abbrev-ref HEAD)" != "master" ]]; then
+  echo 'Error: Release should be run on the master branch. Exiting.'
   exit 1
 fi
 
