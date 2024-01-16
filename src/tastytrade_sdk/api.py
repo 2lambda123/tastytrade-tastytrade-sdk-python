@@ -29,8 +29,8 @@ class RequestsSession:
     def login(self, login: str, password: str) -> None:
         """
 
-        :param login: str: 
-        :param password: str: 
+        :param login: str:
+        :param password: str:
 
         """
         self.__session.headers["Authorization"] = self.request(
@@ -46,8 +46,8 @@ class RequestsSession:
     ) -> Optional[dict]:
         """
 
-        :param method: str: 
-        :param path: str: 
+        :param method: str:
+        :param path: str:
         :param params: Optional[QueryParams]:  (Default value = tuple())
         :param data: Optional[dict]:  (Default value = None)
 
@@ -83,9 +83,9 @@ class RequestsSession:
 @singleton
 class Api:
     """In case an open API feature isn't supported by this SDK yet, use this submodule to make direct requests to the API.
-    
+
     The `params` argument can either be a `Dict[str, Any]` or a `List[Tuple[str, Any]]`
-    
+
     API endpoints that accept multiple symbols in the query string use the `symbol[]=SPY&symbol[]=AAPL&...` convention,
     in which case, `params` should be passed as a `List[Tuple[str, Any]]`, since duplicate keys are not allowed in
     dicts. e.g:
@@ -93,7 +93,7 @@ class Api:
     equities = tasty.api.get(
         '/instruments/equities',
 
-    :param br: 
+    :param br:
 
     """
 
@@ -105,7 +105,7 @@ class Api:
     def get(self, path: str, params: Optional[QueryParams] = None) -> Optional[dict]:
         """Make a GET request
 
-        :param path: str: 
+        :param path: str:
         :param params: Optional[QueryParams]:  (Default value = None)
 
         """
@@ -119,7 +119,7 @@ class Api:
     ) -> Optional[dict]:
         """Make a POST request
 
-        :param path: str: 
+        :param path: str:
         :param params: Optional[QueryParams]:  (Default value = None)
         :param data: Optional[dict]:  (Default value = None)
 
@@ -134,7 +134,7 @@ class Api:
     ) -> Optional[dict]:
         """Make a PUT request
 
-        :param path: str: 
+        :param path: str:
         :param params: Optional[QueryParams]:  (Default value = None)
         :param data: Optional[dict]:  (Default value = None)
 
@@ -149,7 +149,7 @@ class Api:
     ) -> Optional[dict]:
         """Make a PATCH request
 
-        :param path: str: 
+        :param path: str:
         :param params: Optional[QueryParams]:  (Default value = None)
         :param data: Optional[dict]:  (Default value = None)
 
@@ -159,7 +159,7 @@ class Api:
     def delete(self, path: str, params: Optional[QueryParams] = None) -> Optional[dict]:
         """Make a DELETE request
 
-        :param path: str: 
+        :param path: str:
         :param params: Optional[QueryParams]:  (Default value = None)
 
         """
