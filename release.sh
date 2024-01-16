@@ -34,7 +34,7 @@ if [[ $(git rev-parse HEAD) != $(git rev-parse origin/master) ]]; then
 fi
 
 <<<<<<< HEAD
-NEW_VERSION=NEW_VERSION=$(poetry version ${RELEASE_TYPE} --short) || { echo 'Error: Failed to determine the new version. Exiting.'; exit 1; }
+NEW_VERSION=$(poetry version ${RELEASE_TYPE} --short) || { echo 'Error: Failed to determine the new version. Exiting.'; exit 1; }
 git checkout -b "release-${NEW_VERSION}"
 =======
 export NEW_VERSION="$(poetry version "$RELEASE_TYPE" --short)"
