@@ -1,10 +1,25 @@
-#!/bin/zsh
+#!/bin/bash
 
 export RELEASE_TYPE="$1"
 
 export ERROR_MESSAGE="Usage: './release.sh (patch|minor|major)'"
+<<<<<<< HEAD
 if [ -z "$RELEASE_TYPE" ]; then
   echo "$ERROR_MESSAGE"
+  echo "Error: Failed to set RELEASE_TYPE variable. Exiting."
+  echo "Error logs:"
+  echo "$(git log --pretty=format:'%h %s' -n 10)"
+  exit 1
+  echo "$ERROR_MESSAGE"
+=======
+if [ -z "$RELEASE_TYPE" ]; then
+  echo "$ERROR_MESSAGE"
+  echo "Error: Failed to set RELEASE_TYPE variable. Exiting."
+  echo "Error logs:"
+  echo "$(git log --pretty=format:'%h %s' -n 10)"
+  exit 1
+  echo "$ERROR_MESSAGE"
+>>>>>>> origin/fix-release-script
   exit 1
 fi
 if ! [[ "$RELEASE_TYPE" =~ (patch|minor|major) ]]; then
@@ -13,22 +28,28 @@ if ! [[ "$RELEASE_TYPE" =~ (patch|minor|major) ]]; then
 fi
 
 if [[ "$(git rev-parse --abbrev-ref HEAD)" != "master" ]]; then
-  echo 'Release should be run on master. Exiting.'
+  echo 'Error: Release should be run on master. Exiting.'
   exit 1
 fi
 
 if [[ -n $(git status -s) ]]; then
-  echo "There are uncommitted changes. Exiting."
+  echo 'Error: There are uncommitted changes. Exiting.'
   exit 1
 fi
 
 if [[ $(git rev-parse HEAD) != $(git rev-parse origin/master) ]]; then
-  echo 'Local master is not in sync with remote. Exiting.'
+  echo 'Error: Local master is not in sync with remote. Exiting.'
   exit 1
 fi
 
-export NEW_VERSION="$(poetry version "$RELEASE_TYPE" --short)"
-git checkout -b "release-$NEW_VERSION"
+<<<<<<< HEAD
+NEW_VERSION=$(poetry version ${RELEASE_TYPE} --short) || { echo 'Error: Failed to determine the new version. Exiting.'; exit 1; }
+git checkout -b "release-${NEW_VERSION}"
+=======
+NEW_VERSION=$(poetry version ${RELEASE_TYPE} --short) || { echo 'Error: Failed to determine the new version. Exiting.'; exit 1; }
+git checkout -b "release-${NEW_VERSION}"
+git checkout -b "release-${NEW_VERSION}"
+>>>>>>> origin/fix-release-script
 git add pyproject.toml
 git commit -m "Release $NEW_VERSION"
 git tag -f "$NEW_VERSION"
@@ -36,9 +57,15 @@ git tag -f latest
 git push origin -f "$NEW_VERSION"
 git push origin -f latest
 
-export NEW_PREPATCH_VERSION="$(poetry version prepatch --short)"
+NEW_PREPATCH_VERSION=$(poetry version prepatch --short) || { echo 'Error: Failed to determine the new pre-patch version. Exiting.'; exit 1; }
 git add pyproject.toml
 git commit -m "Bumping to next pre-patch version $NEW_PREPATCH_VERSION"
 git push
 
+<<<<<<< HEAD
 hub pull-request -m "Release ${NEW_VERSION}"
+echo "Error logs:"
+echo "$(git log --pretty=format:'%h %s' -n 10)"
+=======
+hub pull-request -m "Release ${NEW_VERSION}"
+>>>>>>> origin/fix-release-script
