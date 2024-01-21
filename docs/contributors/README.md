@@ -44,9 +44,9 @@ All work should be done on a branch and submitted for PR review.
 
 ## Releasing
 When ready to release a new version of the SDK to pypi, run one of:
-* `make release_patch` - for bug fixes
-* `make release_minor` - for new features
-* `make release_major` - for breaking changes
+* make release_patch  # for bug fixes
+* make release_minor  # for new features
+* make release_major  # for breaking changes
 
 Each of these commands prompts you to create a new release PR in github.
 

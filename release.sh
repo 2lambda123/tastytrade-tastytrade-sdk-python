@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export RELEASE_TYPE="$1"
+export RELEASE_TYPE="${1:?${ERROR_MESSAGE}}"
 
 export ERROR_MESSAGE="Usage: './release.sh (patch|minor|major)'"
 <<<<<<< HEAD
@@ -13,8 +13,8 @@ if [ -z "$RELEASE_TYPE" ]; then
 >>>>>>> origin/fix-release-script
   exit 1
 fi
-if ! [[ "$RELEASE_TYPE" =~ (patch|minor|major) ]]; then
-  echo "$ERROR_MESSAGE"
+if [[ "$(git rev-parse --abbrev-ref HEAD)" != "master" ]]; then
+  echo 'Error: Release should be run on the master branch. Exiting.'
   exit 1
 fi
 
@@ -34,7 +34,7 @@ if [[ $(git rev-parse HEAD) != $(git rev-parse origin/master) ]]; then
 fi
 
 <<<<<<< HEAD
-NEW_VERSION=$(poetry version ${RELEASE_TYPE} --short) || { echo 'Error: Failed to determine the new version. Exiting.'; exit 1; }
+export NEW_VERSION="$(poetry version "$RELEASE_TYPE" --short)"
 git checkout -b "release-${NEW_VERSION}"
 =======
 export NEW_VERSION="$(poetry version "$RELEASE_TYPE" --short)"
@@ -55,5 +55,5 @@ git push
 <<<<<<< HEAD
 echo 'Error: Failed to create pull request. Exiting.'
 =======
-hub pull-request -m "Release ${NEW_VERSION}"
+echo 'Error: Failed to create pull request. Exiting.'
 >>>>>>> origin/fix-release-script
