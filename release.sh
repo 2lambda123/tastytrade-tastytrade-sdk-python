@@ -5,10 +5,19 @@ export RELEASE_TYPE="$1"
 export ERROR_MESSAGE="Usage: './release.sh (patch|minor|major)'"
 <<<<<<< HEAD
 if [ -z "$RELEASE_TYPE" ]; then
-  echo "${ERROR_MESSAGE}"
-  echo 'Error: Failed to set RELEASE_TYPE variable. Exiting.'
+  echo "$ERROR_MESSAGE"
+  echo "Error: Failed to set RELEASE_TYPE variable. Exiting."
+  echo "Error logs:"
+  echo "$(git log --pretty=format:'%h %s' -n 10)"
+  exit 1
+  echo "$ERROR_MESSAGE"
 =======
 if [ -z "$RELEASE_TYPE" ]; then
+  echo "$ERROR_MESSAGE"
+  echo "Error: Failed to set RELEASE_TYPE variable. Exiting."
+  echo "Error logs:"
+  echo "$(git log --pretty=format:'%h %s' -n 10)"
+  exit 1
   echo "$ERROR_MESSAGE"
 >>>>>>> origin/fix-release-script
   exit 1
@@ -39,7 +48,7 @@ git checkout -b "release-${NEW_VERSION}"
 =======
 NEW_VERSION=$(poetry version ${RELEASE_TYPE} --short) || { echo 'Error: Failed to determine the new version. Exiting.'; exit 1; }
 git checkout -b "release-${NEW_VERSION}"
-git checkout -b "release-$NEW_VERSION"
+git checkout -b "release-${NEW_VERSION}"
 >>>>>>> origin/fix-release-script
 git add pyproject.toml
 git commit -m "Release $NEW_VERSION"
@@ -55,6 +64,8 @@ git push
 
 <<<<<<< HEAD
 hub pull-request -m "Release ${NEW_VERSION}"
+echo "Error logs:"
+echo "$(git log --pretty=format:'%h %s' -n 10)"
 =======
 hub pull-request -m "Release ${NEW_VERSION}"
 >>>>>>> origin/fix-release-script
